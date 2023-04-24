@@ -1,4 +1,4 @@
-FROM python:3-stretch
+FROM python:3-bullseye
 
 LABEL name="ecr-login"
 LABEL version="1.0.0"
@@ -13,10 +13,7 @@ LABEL com.github.actions.color="blue"
 COPY LICENSE README.md /
 
 ENV DOCKERVERSION=18.06.1-ce
-RUN RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list && \
-    echo "deb http://archive.debian.org/debian-security stretch/updates main" >> /etc/apt/sources.list && \
-    echo "deb http://archive.debian.org/debian stretch-updates main" >> /etc/apt/sources.list && \
-    apt-get -o Acquire::Check-Valid-Until=false update  && \
+RUN apt-get update && \
   apt-get install -y --no-install-recommends curl groff jq && \
   apt-get -y clean && apt-get -y autoclean && apt-get -y autoremove && \
   curl -fsSLO https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v0.3.0/heptio-authenticator-aws_0.3.0_linux_amd64 && \
